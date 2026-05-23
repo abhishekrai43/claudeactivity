@@ -1,3 +1,6 @@
+<img width="1418" height="877" alt="image" src="https://github.com/user-attachments/assets/92790a1e-6cb6-4c6b-b594-1e14bc662469" />
+
+
 # claudeactivity
 
 Activity visualizer for Claude Code. Scans your local Claude session logs and generates a clean HTML report showing which repos, files, and tools you use most.
