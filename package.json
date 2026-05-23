@@ -1,6 +1,6 @@
 {
   "name": "claudeactivity",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Activity visualizer for Claude Code — see which repos, files, and tools you use most",
   "bin": {
     "claudeactivity": "dist/cli.js"
