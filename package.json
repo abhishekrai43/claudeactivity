@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Activity visualizer for Claude Code — see which repos, files, and tools you use most",
   "bin": {
-    "claudeactivity": "./dist/cli.js"
+    "claudeactivity": "dist/cli.js"
   },
   "main": "./dist/cli.js",
   "files": [

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/cli.ts",
+    "src/types.ts",
+    "src/scanner/**/*",
+    "src/checks/**/*",
+    "src/report/**/*"
+  ],
+  "exclude": ["node_modules", "dist", "src-tauri"]
+}
