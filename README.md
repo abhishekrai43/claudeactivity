@@ -1,4 +1,5 @@
-<img width="1418" height="877" alt="image" src="https://github.com/user-attachments/assets/92790a1e-6cb6-4c6b-b594-1e14bc662469" />
+<img width="1053" height="871" alt="image" src="https://github.com/user-attachments/assets/4952dd30-0905-418d-9405-6a6fa563c8e7" />
+
 
 
 # claudeactivity
