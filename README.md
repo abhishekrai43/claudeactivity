@@ -22,15 +22,33 @@ claudeactivity scan
 
 The report opens in your browser automatically. If it doesn't, the path is printed — copy it and open manually.
 
+The report is a tabbed dashboard with a date-range filter (7d / 30d / 90d / All) that recomputes every section live.
+
 ## What it shows
 
-- **Activity timeline** — 90-day bar chart of daily file accesses
-- **Tool breakdown** — Read / Edit / Search / Exec proportions and per-tool counts
+**Overview**
+- **Activity timeline** — daily file accesses across the selected range
+- **Tool breakdown** — Read / Edit / Search / Exec proportions
 - **Coding persona** — inferred from your tool usage ratios
+
+**Projects**
 - **Project activity** — all repos ranked by access count, sessions, and avg session depth
-- **Directory hotspots** — most accessed directories across all projects
-- **Most accessed files** — top files with project and access count
 - **Repository breakdown** — per-repo cards with session stats and top files
+
+**Files**
+- **Most accessed files** and **most edited files** (edits/writes only)
+- **Directory hotspots** — most accessed directories
+- **Language breakdown** — share of activity by file extension
+
+**Sessions**
+- **Time-of-day heatmap** — when you use Claude, by hour and day of week
+- **Session duration** — average, median, longest, and a length histogram
+
+**Tokens** (read directly from session logs — no estimates)
+- **Total tokens** and **cache hit rate**
+- **Tokens by model** (Opus / Sonnet / Haiku) and **by project**
+- **Token composition** — fresh input / output / cache write / cache read
+- **Token usage over time**
 
 ## Options
 
@@ -50,7 +68,7 @@ Reports are saved to:
 
 ## How it works
 
-Reads JSONL session logs from `~/.claude/projects/` (or `~/.config/claude/projects/`), extracts file accesses and tool usage from each session, and renders a self-contained HTML report with no external dependencies.
+Reads JSONL session logs from `~/.claude/projects/` (or `~/.config/claude/projects/`), extracts file accesses, tool usage, and token counts from each session, and renders a self-contained HTML report with no external dependencies. All filtering and charts run client-side, so the date filter works without regenerating the report.
 
 ## Requirements
 
