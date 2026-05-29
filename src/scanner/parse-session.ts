@@ -1,7 +1,14 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as crypto from "crypto";
-import type { FileAccess, SessionData } from "../types";
+import type { FileAccess, SessionData, ModelUsage } from "../types";
+
+interface RawUsage {
+  input_tokens?: number;
+  output_tokens?: number;
+  cache_creation_input_tokens?: number;
+  cache_read_input_tokens?: number;
+}
 
 interface RawEntry {
   type: string;
@@ -11,6 +18,8 @@ interface RawEntry {
   message?: {
     role?: string;
     content?: unknown;
+    model?: string;
+    usage?: RawUsage;
   };
 }
 
@@ -25,6 +34,7 @@ export function parseSession(logPath: string): SessionData {
   const sessionId = crypto.randomUUID();
   const accesses: FileAccess[] = [];
   const toolCounts: Record<string, number> = {};
+  const usage: Record<string, ModelUsage> = {};
   let projectPath = "";
   let firstTimestamp: string | null = null;
   let lastTimestamp: string | null = null;
@@ -59,6 +69,18 @@ export function parseSession(logPath: string): SessionData {
 
     if (entry.type !== "assistant" || !entry.message) continue;
 
+    // Token usage per model
+    const u = entry.message.usage;
+    if (u) {
+      const model = entry.message.model || "unknown";
+      const cur = usage[model] ?? { input: 0, output: 0, cacheCreate: 0, cacheRead: 0 };
+      cur.input += u.input_tokens ?? 0;
+      cur.output += u.output_tokens ?? 0;
+      cur.cacheCreate += u.cache_creation_input_tokens ?? 0;
+      cur.cacheRead += u.cache_read_input_tokens ?? 0;
+      usage[model] = cur;
+    }
+
     const content = entry.message.content;
     if (!Array.isArray(content)) continue;
 
@@ -84,6 +106,7 @@ export function parseSession(logPath: string): SessionData {
     projectDir: "",
     accesses,
     toolCounts,
+    usage,
     firstTimestamp,
     lastTimestamp,
     messageCount,
