@@ -243,6 +243,7 @@ function clientApp() {
   // ── timeline svg ──
   function timeline(daily, unit) {
     unit = unit || "accesses";
+    const gid = "bg-" + unit; // unique gradient id; duplicates break url() refs across hidden panels
     const today = new Date(); today.setHours(0, 0, 0, 0);
     let span;
     if (range === "all") {
@@ -263,7 +264,7 @@ function clientApp() {
     days.forEach((day, i) => {
       const h = day.count === 0 ? 3 : Math.max(6, Math.round((day.count / max) * (svgH - 6)));
       const x = i * (barW + gap), y = svgH - h;
-      const fill = day.count === 0 ? "#e2e8f0" : "url(#bg)";
+      const fill = day.count === 0 ? "#e2e8f0" : "url(#" + gid + ")";
       const disp = unit === "tokens" ? fmtTok(day.count) : String(day.count);
       bars += '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + h + '" fill="' + fill + '" rx="2"><title>' + esc(day.date + ": " + disp + " " + unit) + '</title></rect>';
     });
@@ -278,7 +279,7 @@ function clientApp() {
       }
     });
 
-    return '<svg viewBox="0 0 ' + totalW + " " + (svgH + 24) + '" width="100%" height="' + (svgH + 24) + '" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient></defs>' + bars + labels + "</svg>";
+    return '<svg viewBox="0 0 ' + totalW + " " + (svgH + 24) + '" width="100%" height="' + (svgH + 24) + '" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#6d28d9"/></linearGradient></defs>' + bars + labels + "</svg>";
   }
 
   // ── renderers ──
